@@ -8,7 +8,7 @@ import mediapipe as mp
 from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '-'  # Edge에서 이용하는 것이 목표이므로 GPU를 이용하지 않음\
+os.environ['CUDA_VISIBLE_DEVICES'] = '-'  # Edge에서 이용하는 것이 목표이므로 GPU를 이용하지 않음
 
 question1 = ['허벅지', '무릎', '발목', '발가락', '코', '귀', '손목', '얼굴', '어깨', '팔꿈치', '손', '가슴', '등', '배', '갈비뼈', '골반', '관절', '근육',
              '기도', '뇌', '두개골', '맹장', '목구멍', '성대', '식도', '심장', '엉덩이', '이마', '입속', '입술', '전립선', '질', '척추', '치아', '턱',
@@ -29,7 +29,7 @@ holistic = mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confi
 
 def get_prediction(q_num, video):
     def infer(q_num, video):
-        model = tf.keras.models.load_model('q' + str(q_num) + '.h5')
+        model = tf.keras.models.load_model('models/q' + str(q_num) + '.h5')
         video = np.array(video)
         video = video.reshape(1, 30, 1662)
         result = model.predict(video)
