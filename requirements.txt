@@ -1,0 +1,5 @@
+flask
+cv2
+numpy
+tensorflow
+mediapipe
