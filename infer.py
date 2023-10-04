@@ -27,8 +27,8 @@ mp_holistic = mp.solutions.holistic
 holistic = mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
 
-def get_prediction(q_num, video):
-    def infer(q_num, video):
+def infer(q_num, video):
+    def classify(q_num, video):
         model = tf.keras.models.load_model('models/q' + str(q_num) + '.h5')
         video = np.array(video)
         video = video.reshape(1, 30, 1662)
@@ -76,7 +76,7 @@ def get_prediction(q_num, video):
             sequences.append(keypoints)
 
         if len(sequences) == 30:
-            temp = infer(q_num, sequences)
+            temp = classify(q_num, sequences)
             label_counts[temp] += 1
             sequences.popleft()
 
@@ -84,12 +84,3 @@ def get_prediction(q_num, video):
             continue
 
     return questions[q_num][np.argmax(label_counts)]
-
-
-class ProcessVideo():
-    def __init__(self, q_num, video):
-        self.q_num = q_num
-        self.video = video
-
-    def __call__(self):
-        return get_prediction(self.q_num, self.video)

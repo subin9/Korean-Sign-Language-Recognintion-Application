@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from utils import ProcessVideo
+from infer import infer
 app = Flask(__name__)
 
 @app.route('/classify', methods=['POST'])
@@ -11,7 +11,7 @@ def predict():
             file.save('./video.mp4')
             num = int(request.form['num'])
         video = './video.mp4'
-        return jsonify({'result':ProcessVideo(num,video)})
+        return jsonify({'result':infer(num,video)})
     except Exception as e:
         print(e)
         return jsonify({'result':'error'}), 500
